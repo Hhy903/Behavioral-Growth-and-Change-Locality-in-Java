@@ -1,8 +1,10 @@
-package edu.colorado.locality;
+package edu.colorado.locality.core;
 
+import edu.colorado.locality.core.Creature;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreatureTest {
 

@@ -1,4 +1,6 @@
-package edu.colorado.locality;
+package edu.colorado.locality.simulation;
+
+import edu.colorado.locality.core.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,10 @@ public class Ecosystem {
 
     public void addCreature(Creature creature) {
         creatures.add(creature);
+    }
+
+    public List<Creature> getCreatures() {
+        return creatures;
     }
 
     public void printState() {

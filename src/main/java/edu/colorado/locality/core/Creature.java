@@ -1,4 +1,4 @@
-package edu.colorado.locality;
+package edu.colorado.locality.core;
 
 public abstract class Creature {
     protected String name;
