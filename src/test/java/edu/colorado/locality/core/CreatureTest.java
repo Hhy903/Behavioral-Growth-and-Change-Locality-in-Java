@@ -1,6 +1,5 @@
 package edu.colorado.locality.core;
 
-import edu.colorado.locality.core.Creature;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -31,5 +30,25 @@ public class CreatureTest {
 
         creature.die();
         assertFalse(creature.isAlive());
+    }
+
+    @Test
+    void creatureCannotFeedByDefault() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        Creature prey = new Creature("Prey") {
+            @Override
+            public String getType() {
+                return "PreyType";
+            }
+        };
+
+        assertFalse(creature.feedOn(prey));
+        assertTrue(prey.isAlive());
     }
 }

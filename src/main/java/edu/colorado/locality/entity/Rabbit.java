@@ -11,4 +11,9 @@ public class Rabbit extends Creature {
     public String getType() {
         return "Rabbit";
     }
+
+    @Override
+    public boolean canEat(Creature other) {
+        return other instanceof Grass;
+    }
 }

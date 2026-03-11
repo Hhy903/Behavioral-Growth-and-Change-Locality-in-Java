@@ -3,6 +3,7 @@ package edu.colorado.locality.simulation;
 import edu.colorado.locality.core.Creature;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Ecosystem {
@@ -13,7 +14,21 @@ public class Ecosystem {
     }
 
     public List<Creature> getCreatures() {
-        return creatures;
+        return Collections.unmodifiableList(creatures);
+    }
+
+    public void simulateFeeding() {
+        for (Creature hunter : creatures) {
+            if (!hunter.isAlive()) {
+                continue;
+            }
+
+            for (Creature prey : creatures) {
+                if (hunter.feedOn(prey)) {
+                    break;
+                }
+            }
+        }
     }
 
     public void printState() {

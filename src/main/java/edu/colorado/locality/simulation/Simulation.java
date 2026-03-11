@@ -12,6 +12,7 @@ public class Simulation {
         ecosystem.addCreature(new Rabbit("Bunny"));
         ecosystem.addCreature(new Grass("Patch-1"));
 
+        ecosystem.simulateFeeding();
         ecosystem.printState();
     }
 }
