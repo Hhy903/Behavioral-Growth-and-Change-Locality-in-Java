@@ -68,4 +68,39 @@ class EcosystemTest {
         assertTrue(wolf.isAlive());
         assertTrue(grass.isAlive());
     }
+
+    @Test
+    void movementStepMovesAliveCreatures() {
+        Ecosystem ecosystem = new Ecosystem();
+        Wolf wolf = new Wolf("Alpha", 0, 0);
+        Rabbit rabbit = new Rabbit("Bunny", 5, 2);
+        Grass grass = new Grass("Patch-1");
+
+        ecosystem.addCreature(wolf);
+        ecosystem.addCreature(rabbit);
+        ecosystem.addCreature(grass);
+
+        ecosystem.simulateMovement();
+
+        assertEquals(2, wolf.getX());
+        assertEquals(0, wolf.getY());
+        assertEquals(6, rabbit.getX());
+        assertEquals(2, rabbit.getY());
+        assertEquals(0, grass.getX());
+        assertEquals(0, grass.getY());
+    }
+
+    @Test
+    void movementStepSkipsDeadCreatures() {
+        Ecosystem ecosystem = new Ecosystem();
+        Rabbit rabbit = new Rabbit("Bunny", 4, 1);
+        rabbit.die();
+
+        ecosystem.addCreature(rabbit);
+
+        ecosystem.simulateMovement();
+
+        assertEquals(4, rabbit.getX());
+        assertEquals(1, rabbit.getY());
+    }
 }

@@ -31,10 +31,21 @@ public class Ecosystem {
         }
     }
 
+    public void simulateMovement() {
+        for (Creature creature : creatures) {
+            if (!creature.isAlive()) {
+                continue;
+            }
+
+            creature.move();
+        }
+    }
+
     public void printState() {
         for (Creature creature : creatures) {
             System.out.println(creature.getType() + " " + creature.getName()
-                    + " alive=" + creature.isAlive());
+                    + " alive=" + creature.isAlive()
+                    + " position=(" + creature.getX() + "," + creature.getY() + ")");
         }
     }
 }

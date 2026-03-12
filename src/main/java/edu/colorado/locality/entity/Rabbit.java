@@ -7,9 +7,18 @@ public class Rabbit extends Creature {
         super(name);
     }
 
+    public Rabbit(String name, int x, int y) {
+        super(name, x, y);
+    }
+
     @Override
     public String getType() {
         return "Rabbit";
+    }
+
+    @Override
+    public void move() {
+        moveBy(1, 0);
     }
 
     @Override

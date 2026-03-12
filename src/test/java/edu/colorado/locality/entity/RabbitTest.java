@@ -8,6 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RabbitTest {
 
     @Test
+    void rabbitMovesOneStepOnXAxis() {
+        Rabbit rabbit = new Rabbit("Bunny", 2, 1);
+
+        rabbit.move();
+
+        assertTrue(rabbit.getX() == 3);
+        assertTrue(rabbit.getY() == 1);
+    }
+
+    @Test
     void rabbitCanFeedOnGrass() {
         Rabbit rabbit = new Rabbit("Bunny");
         Grass grass = new Grass("Patch-1");
