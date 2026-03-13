@@ -1,5 +1,6 @@
 package edu.colorado.locality.simulation;
 
+import edu.colorado.locality.core.Creature;
 import edu.colorado.locality.entity.Grass;
 import edu.colorado.locality.entity.Rabbit;
 import edu.colorado.locality.entity.Wolf;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EcosystemTest {
@@ -102,5 +104,58 @@ class EcosystemTest {
 
         assertEquals(4, rabbit.getX());
         assertEquals(1, rabbit.getY());
+    }
+
+    @Test
+    void reproductionStepAddsNewRabbitAtEndOfRound() {
+        Ecosystem ecosystem = new Ecosystem();
+        Rabbit first = new Rabbit("Bunny-1", 2, 0);
+        Rabbit second = new Rabbit("Bunny-2", 3, 0);
+
+        ecosystem.addCreature(first);
+        ecosystem.addCreature(second);
+
+        ecosystem.simulateReproduction();
+
+        assertEquals(3, ecosystem.getCreatures().size());
+
+        Creature offspring = ecosystem.getCreatures().get(2);
+        assertNotNull(offspring);
+        assertTrue(offspring instanceof Rabbit);
+        assertEquals(2, offspring.getX());
+        assertEquals(0, offspring.getY());
+    }
+
+    @Test
+    void reproductionStepSkipsDeadCreatures() {
+        Ecosystem ecosystem = new Ecosystem();
+        Rabbit first = new Rabbit("Bunny-1", 0, 0);
+        Rabbit second = new Rabbit("Bunny-2", 1, 0);
+        second.die();
+
+        ecosystem.addCreature(first);
+        ecosystem.addCreature(second);
+
+        ecosystem.simulateReproduction();
+
+        assertEquals(2, ecosystem.getCreatures().size());
+    }
+
+    @Test
+    void reproductionStepDoesNotLetNewbornReproduceInSameRound() {
+        Ecosystem ecosystem = new Ecosystem();
+        Rabbit first = new Rabbit("Bunny-1", 0, 0);
+        Rabbit second = new Rabbit("Bunny-2", 1, 0);
+        Rabbit third = new Rabbit("Bunny-3", 10, 0);
+        Rabbit fourth = new Rabbit("Bunny-4", 11, 0);
+
+        ecosystem.addCreature(first);
+        ecosystem.addCreature(second);
+        ecosystem.addCreature(third);
+        ecosystem.addCreature(fourth);
+
+        ecosystem.simulateReproduction();
+
+        assertEquals(6, ecosystem.getCreatures().size());
     }
 }

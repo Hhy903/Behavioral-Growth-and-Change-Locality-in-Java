@@ -25,4 +25,18 @@ public class Wolf extends Creature {
     public boolean canEat(Creature other) {
         return other instanceof Rabbit;
     }
+
+    @Override
+    public boolean canReproduceWith(Creature other) {
+        return other instanceof Wolf && isAdjacentTo(other);
+    }
+
+    @Override
+    public Creature reproduceWith(Creature other, String childName) {
+        if (!canReproduceWith(other) || !isAlive() || !other.isAlive()) {
+            return null;
+        }
+
+        return new Wolf(childName, getX(), getY());
+    }
 }

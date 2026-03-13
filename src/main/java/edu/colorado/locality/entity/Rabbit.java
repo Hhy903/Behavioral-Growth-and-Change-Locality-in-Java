@@ -25,4 +25,18 @@ public class Rabbit extends Creature {
     public boolean canEat(Creature other) {
         return other instanceof Grass;
     }
+
+    @Override
+    public boolean canReproduceWith(Creature other) {
+        return other instanceof Rabbit && isAdjacentTo(other);
+    }
+
+    @Override
+    public Creature reproduceWith(Creature other, String childName) {
+        if (!canReproduceWith(other) || !isAlive() || !other.isAlive()) {
+            return null;
+        }
+
+        return new Rabbit(childName, getX(), getY());
+    }
 }

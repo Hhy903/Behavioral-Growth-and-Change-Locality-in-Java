@@ -54,9 +54,25 @@ public abstract class Creature {
         return true;
     }
 
+    public boolean canReproduceWith(Creature other) {
+        return false;
+    }
+
+    public Creature reproduceWith(Creature other, String childName) {
+        if (!alive || other == null || other == this || !other.isAlive() || !canReproduceWith(other)) {
+            return null;
+        }
+
+        return null;
+    }
+
     protected void moveBy(int deltaX, int deltaY) {
         this.x += deltaX;
         this.y += deltaY;
+    }
+
+    protected boolean isAdjacentTo(Creature other) {
+        return this.y == other.y && Math.abs(this.x - other.x) <= 1;
     }
 
     public abstract String getType();

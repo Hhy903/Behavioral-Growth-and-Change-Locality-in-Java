@@ -79,4 +79,23 @@ public class CreatureTest {
         assertTrue(creature.getX() == 3);
         assertTrue(creature.getY() == 4);
     }
+
+    @Test
+    void creatureCannotReproduceByDefault() {
+        Creature creature = new Creature("Test", 0, 0) {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        Creature mate = new Creature("Mate", 0, 0) {
+            @Override
+            public String getType() {
+                return "MateType";
+            }
+        };
+
+        assertTrue(creature.reproduceWith(mate, "Child") == null);
+    }
 }
