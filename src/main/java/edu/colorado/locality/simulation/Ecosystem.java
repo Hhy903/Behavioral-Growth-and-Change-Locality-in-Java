@@ -1,6 +1,7 @@
 package edu.colorado.locality.simulation;
 
 import edu.colorado.locality.core.Creature;
+import edu.colorado.locality.entity.Grass;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,8 @@ import java.util.List;
 public class Ecosystem {
     private final List<Creature> creatures = new ArrayList<>();
     private int offspringCounter = 1;
+    private int grassCounter = 1;
+    private Season currentSeason = Season.SPRING;
 
     public void addCreature(Creature creature) {
         creatures.add(creature);
@@ -16,6 +19,10 @@ public class Ecosystem {
 
     public List<Creature> getCreatures() {
         return Collections.unmodifiableList(creatures);
+    }
+
+    public Season getCurrentSeason() {
+        return currentSeason;
     }
 
     public void simulateFeeding() {
@@ -116,7 +123,23 @@ public class Ecosystem {
         }
     }
 
+    public void applySeasonalResourcePolicy() {
+        switch (currentSeason) {
+            case SPRING -> addGrassResources(2);
+            case SUMMER -> addGrassResources(1);
+            case AUTUMN -> {
+                // No new resource growth in autumn.
+            }
+            case WINTER -> ageLivingGrass();
+        }
+    }
+
+    public void advanceSeason() {
+        currentSeason = currentSeason.next();
+    }
+
     public void printState() {
+        System.out.println("season=" + currentSeason);
         for (Creature creature : creatures) {
             System.out.println(creature.getType() + " " + creature.getName()
                     + " alive=" + creature.isAlive()
@@ -129,6 +152,26 @@ public class Ecosystem {
     private String nextOffspringName(String type) {
         String name = type + "-offspring-" + offspringCounter;
         offspringCounter++;
+        return name;
+    }
+
+    private void addGrassResources(int count) {
+        for (int i = 0; i < count; i++) {
+            creatures.add(new Grass(nextGrassName(), grassCounter - 1, 0));
+        }
+    }
+
+    private void ageLivingGrass() {
+        for (Creature creature : creatures) {
+            if (creature instanceof Grass && creature.isAlive()) {
+                creature.ageOneStep();
+            }
+        }
+    }
+
+    private String nextGrassName() {
+        String name = "Seasonal-Grass-" + grassCounter;
+        grassCounter++;
         return name;
     }
 }

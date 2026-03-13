@@ -17,6 +17,8 @@ public class Simulation {
         ecosystem.simulateReproduction();
         ecosystem.simulateDiseaseSpread();
         ecosystem.simulateAgingAndDeath();
+        ecosystem.applySeasonalResourcePolicy();
+        ecosystem.advanceSeason();
         ecosystem.printState();
     }
 }

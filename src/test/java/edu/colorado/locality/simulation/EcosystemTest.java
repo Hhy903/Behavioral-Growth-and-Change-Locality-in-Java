@@ -282,4 +282,74 @@ class EcosystemTest {
 
         assertFalse(rabbit.isInfected());
     }
+
+    @Test
+    void seasonalPolicyStartsInSpring() {
+        Ecosystem ecosystem = new Ecosystem();
+
+        assertEquals(Season.SPRING, ecosystem.getCurrentSeason());
+    }
+
+    @Test
+    void springPolicyAddsTwoGrassResources() {
+        Ecosystem ecosystem = new Ecosystem();
+
+        ecosystem.applySeasonalResourcePolicy();
+
+        assertEquals(2, ecosystem.getCreatures().size());
+        assertTrue(ecosystem.getCreatures().get(0) instanceof Grass);
+        assertTrue(ecosystem.getCreatures().get(1) instanceof Grass);
+    }
+
+    @Test
+    void summerPolicyAddsOneGrassResource() {
+        Ecosystem ecosystem = new Ecosystem();
+
+        ecosystem.advanceSeason();
+        ecosystem.applySeasonalResourcePolicy();
+
+        assertEquals(Season.SUMMER, ecosystem.getCurrentSeason());
+        assertEquals(1, ecosystem.getCreatures().size());
+        assertTrue(ecosystem.getCreatures().get(0) instanceof Grass);
+    }
+
+    @Test
+    void autumnPolicyAddsNoNewGrassResources() {
+        Ecosystem ecosystem = new Ecosystem();
+
+        ecosystem.advanceSeason();
+        ecosystem.advanceSeason();
+        ecosystem.applySeasonalResourcePolicy();
+
+        assertEquals(Season.AUTUMN, ecosystem.getCurrentSeason());
+        assertEquals(0, ecosystem.getCreatures().size());
+    }
+
+    @Test
+    void winterPolicyAgesLivingGrassAsResourceDecline() {
+        Ecosystem ecosystem = new Ecosystem();
+        Grass grass = new Grass("Patch-1");
+
+        ecosystem.addCreature(grass);
+        ecosystem.advanceSeason();
+        ecosystem.advanceSeason();
+        ecosystem.advanceSeason();
+
+        ecosystem.applySeasonalResourcePolicy();
+
+        assertEquals(Season.WINTER, ecosystem.getCurrentSeason());
+        assertEquals(1, grass.getAge());
+    }
+
+    @Test
+    void advancingSeasonWrapsBackToSpring() {
+        Ecosystem ecosystem = new Ecosystem();
+
+        ecosystem.advanceSeason();
+        ecosystem.advanceSeason();
+        ecosystem.advanceSeason();
+        ecosystem.advanceSeason();
+
+        assertEquals(Season.SPRING, ecosystem.getCurrentSeason());
+    }
 }
