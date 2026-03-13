@@ -2,6 +2,7 @@ package edu.colorado.locality.core;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,6 +31,18 @@ public class CreatureTest {
 
         assertTrue(creature.getX() == 0);
         assertTrue(creature.getY() == 0);
+    }
+
+    @Test
+    void creatureStartsAtAgeZero() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertEquals(0, creature.getAge());
     }
 
     @Test
@@ -97,5 +110,36 @@ public class CreatureTest {
         };
 
         assertTrue(creature.reproduceWith(mate, "Child") == null);
+    }
+
+    @Test
+    void agingIncrementsAgeForLivingCreature() {
+        Creature creature = new Creature("Test", 0, 0, 3) {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        creature.ageOneStep();
+
+        assertEquals(1, creature.getAge());
+        assertTrue(creature.isAlive());
+    }
+
+    @Test
+    void agingKillsCreatureAtMaxAge() {
+        Creature creature = new Creature("Test", 0, 0, 2) {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        creature.ageOneStep();
+        creature.ageOneStep();
+
+        assertEquals(2, creature.getAge());
+        assertFalse(creature.isAlive());
     }
 }

@@ -3,6 +3,7 @@ package edu.colorado.locality.entity;
 import edu.colorado.locality.core.Creature;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,5 +51,12 @@ class RabbitTest {
         assertTrue(offspring instanceof Rabbit);
         assertTrue(offspring.getX() == 2);
         assertTrue(offspring.getY() == 0);
+    }
+
+    @Test
+    void rabbitUsesSpeciesSpecificMaxAge() {
+        Rabbit rabbit = new Rabbit("Bunny");
+
+        assertEquals(5, rabbit.getMaxAge());
     }
 }

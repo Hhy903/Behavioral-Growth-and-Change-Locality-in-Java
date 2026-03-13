@@ -158,4 +158,53 @@ class EcosystemTest {
 
         assertEquals(6, ecosystem.getCreatures().size());
     }
+
+    @Test
+    void agingStepAdvancesAgeForLivingCreatures() {
+        Ecosystem ecosystem = new Ecosystem();
+        Wolf wolf = new Wolf("Alpha");
+        Rabbit rabbit = new Rabbit("Bunny");
+        Grass grass = new Grass("Patch-1");
+
+        ecosystem.addCreature(wolf);
+        ecosystem.addCreature(rabbit);
+        ecosystem.addCreature(grass);
+
+        ecosystem.simulateAgingAndDeath();
+
+        assertEquals(1, wolf.getAge());
+        assertEquals(1, rabbit.getAge());
+        assertEquals(1, grass.getAge());
+    }
+
+    @Test
+    void agingStepKillsCreaturesThatReachMaxAge() {
+        Ecosystem ecosystem = new Ecosystem();
+        Grass grass = new Grass("Patch-1");
+
+        ecosystem.addCreature(grass);
+
+        ecosystem.simulateAgingAndDeath();
+        ecosystem.simulateAgingAndDeath();
+        ecosystem.simulateAgingAndDeath();
+
+        assertEquals(3, grass.getAge());
+        assertFalse(grass.isAlive());
+    }
+
+    @Test
+    void agingStepDoesNotAdvanceDeadCreaturesFurther() {
+        Ecosystem ecosystem = new Ecosystem();
+        Grass grass = new Grass("Patch-1");
+
+        ecosystem.addCreature(grass);
+
+        ecosystem.simulateAgingAndDeath();
+        ecosystem.simulateAgingAndDeath();
+        ecosystem.simulateAgingAndDeath();
+        ecosystem.simulateAgingAndDeath();
+
+        assertEquals(3, grass.getAge());
+        assertFalse(grass.isAlive());
+    }
 }

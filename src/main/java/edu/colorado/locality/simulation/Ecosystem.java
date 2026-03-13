@@ -83,10 +83,17 @@ public class Ecosystem {
         creatures.addAll(newborns);
     }
 
+    public void simulateAgingAndDeath() {
+        for (Creature creature : creatures) {
+            creature.ageOneStep();
+        }
+    }
+
     public void printState() {
         for (Creature creature : creatures) {
             System.out.println(creature.getType() + " " + creature.getName()
                     + " alive=" + creature.isAlive()
+                    + " age=" + creature.getAge()
                     + " position=(" + creature.getX() + "," + creature.getY() + ")");
         }
     }

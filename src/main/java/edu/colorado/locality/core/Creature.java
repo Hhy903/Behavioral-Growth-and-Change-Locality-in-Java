@@ -5,16 +5,24 @@ public abstract class Creature {
     protected boolean alive;
     protected int x;
     protected int y;
+    protected int age;
+    protected int maxAge;
 
     public Creature(String name) {
-        this(name, 0, 0);
+        this(name, 0, 0, Integer.MAX_VALUE);
     }
 
     public Creature(String name, int x, int y) {
+        this(name, x, y, Integer.MAX_VALUE);
+    }
+
+    public Creature(String name, int x, int y, int maxAge) {
         this.name = name;
         this.alive = true;
         this.x = x;
         this.y = y;
+        this.age = 0;
+        this.maxAge = maxAge;
     }
 
     public String getName() {
@@ -33,8 +41,27 @@ public abstract class Creature {
         return y;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public int getMaxAge() {
+        return maxAge;
+    }
+
     public void die() {
         this.alive = false;
+    }
+
+    public void ageOneStep() {
+        if (!alive) {
+            return;
+        }
+
+        age++;
+        if (age >= maxAge) {
+            die();
+        }
     }
 
     public void move() {
