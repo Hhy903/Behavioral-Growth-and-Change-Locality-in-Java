@@ -55,6 +55,46 @@ Count: 4
 - Simulation layer
 - Test layer
 
+## Behavioral Coupling Type
+
+- Primary coupling: lifecycle and orchestration coupling
+- Secondary coupling: spatial precondition coupling
+
+Reproduction is no longer a simple local action. It couples entity lifecycle creation to ecosystem-level orchestration rules and depends on previously introduced spatial state for mate eligibility.
+
+## New Coordination Rules
+
+Count: 6
+
+- Both participants must be alive
+- Both participants must be of the same species
+- Reproduction requires adjacency on the same `y` coordinate
+- Each creature can reproduce at most once per round
+- Newborn creatures are delayed until the end of the round
+- Pair matching follows insertion-order scanning
+
+## Control-Flow Complexity
+
+- Classification: pair matching plus deferred insertion
+- Shape: nested pair search with participation guards and post-round batch append
+
+Compared to V1 and V2, the reproduction round introduces a more policy-heavy control structure with explicit round semantics.
+
+## State Mutation Scope
+
+- New creature objects are created
+- Ecosystem population size changes when newborns are appended
+- Offspring naming state mutates through an ecosystem-level counter
+- Existing creature participation status affects round execution
+- Spatial state is reused as a reproduction precondition
+
+## Temporary Round-Level Bookkeeping
+
+- `boolean[] reproduced` tracks which creatures have already participated in the current round
+- `List<Creature> newborns` accumulates offspring for deferred insertion
+
+This is the first phase where the simulation layer requires explicit temporary round-level state to preserve behavior semantics.
+
 ## Reproduction Rules Implemented
 
 - `Rabbit` can reproduce with another adjacent `Rabbit`

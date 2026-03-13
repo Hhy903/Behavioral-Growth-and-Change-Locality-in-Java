@@ -55,6 +55,41 @@ Count: 4
 - Simulation layer
 - Test layer
 
+## Behavioral Coupling Type
+
+- Primary coupling: shared core state coupling
+- Secondary coupling: species-specific update coupling
+
+The movement behavior introduces shared spatial state into the base `Creature` abstraction. This couples all entities to the same coordinate representation even though only some species override movement behavior.
+
+## New Coordination Rules
+
+Count: 3
+
+- Only living creatures participate in a movement round
+- Movement executes once per creature per round
+- Species-specific movement deltas are applied through direct polymorphic dispatch
+
+## Control-Flow Complexity
+
+- Classification: per-entity deterministic update
+- Shape: single pass over living creatures with direct state mutation
+
+Movement adds less interaction complexity than feeding or reproduction, but it broadens the architectural impact by changing the shared state model.
+
+## State Mutation Scope
+
+- Shared `x/y` position state is introduced into every creature
+- Living moving entities mutate their own coordinates during each round
+- `Grass` retains the default non-moving behavior
+- No population-size changes occur
+
+## Temporary Round-Level Bookkeeping
+
+- None
+
+The movement round remains stateless at the ecosystem level; it coordinates updates but does not need temporary per-round tracking structures.
+
 ## Movement Rules Implemented
 
 - Every creature now has spatial coordinates `(x, y)`
