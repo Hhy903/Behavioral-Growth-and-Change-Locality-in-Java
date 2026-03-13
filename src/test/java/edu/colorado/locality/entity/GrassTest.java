@@ -40,4 +40,12 @@ class GrassTest {
         assertFalse(grass.isAlive());
         assertTrue(grass.getMaxAge() == 3);
     }
+
+    @Test
+    void grassCanBeInfected() {
+        Grass grass = new Grass("Patch-1");
+
+        assertTrue(grass.infect());
+        assertTrue(grass.isInfected());
+    }
 }

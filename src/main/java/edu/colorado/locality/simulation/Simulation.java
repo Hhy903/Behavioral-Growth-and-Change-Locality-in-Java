@@ -15,6 +15,7 @@ public class Simulation {
         ecosystem.simulateMovement();
         ecosystem.simulateFeeding();
         ecosystem.simulateReproduction();
+        ecosystem.simulateDiseaseSpread();
         ecosystem.simulateAgingAndDeath();
         ecosystem.printState();
     }

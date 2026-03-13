@@ -142,4 +142,49 @@ public class CreatureTest {
         assertEquals(2, creature.getAge());
         assertFalse(creature.isAlive());
     }
+
+    @Test
+    void creatureStartsUninfected() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertFalse(creature.isInfected());
+        assertEquals(0, creature.getInfectionAge());
+    }
+
+    @Test
+    void creatureCanBecomeInfected() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertTrue(creature.infect());
+        assertTrue(creature.isInfected());
+        assertEquals(0, creature.getInfectionAge());
+    }
+
+    @Test
+    void diseaseProgressionKillsCreatureAtInfectionLimit() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        creature.infect();
+        creature.progressDisease();
+        creature.progressDisease();
+
+        assertTrue(creature.isInfected());
+        assertEquals(2, creature.getInfectionAge());
+        assertFalse(creature.isAlive());
+    }
 }

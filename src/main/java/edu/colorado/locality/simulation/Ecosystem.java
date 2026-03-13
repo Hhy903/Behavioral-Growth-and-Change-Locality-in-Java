@@ -89,11 +89,39 @@ public class Ecosystem {
         }
     }
 
+    public void simulateDiseaseSpread() {
+        List<Creature> newlyInfected = new ArrayList<>();
+        List<Creature> activeCarriers = new ArrayList<>();
+
+        for (Creature creature : creatures) {
+            if (creature.isAlive() && creature.isInfected()) {
+                activeCarriers.add(creature);
+            }
+        }
+
+        for (Creature carrier : activeCarriers) {
+            for (Creature target : creatures) {
+                if (carrier.canInfect(target) && !newlyInfected.contains(target)) {
+                    newlyInfected.add(target);
+                }
+            }
+        }
+
+        for (Creature carrier : activeCarriers) {
+            carrier.progressDisease();
+        }
+
+        for (Creature target : newlyInfected) {
+            target.infect();
+        }
+    }
+
     public void printState() {
         for (Creature creature : creatures) {
             System.out.println(creature.getType() + " " + creature.getName()
                     + " alive=" + creature.isAlive()
                     + " age=" + creature.getAge()
+                    + " infected=" + creature.isInfected()
                     + " position=(" + creature.getX() + "," + creature.getY() + ")");
         }
     }

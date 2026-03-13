@@ -7,6 +7,11 @@ public abstract class Creature {
     protected int y;
     protected int age;
     protected int maxAge;
+    protected boolean infected;
+    protected int infectionAge;
+    protected int infectionDuration;
+
+    private static final int DEFAULT_INFECTION_DURATION = 2;
 
     public Creature(String name) {
         this(name, 0, 0, Integer.MAX_VALUE);
@@ -23,6 +28,9 @@ public abstract class Creature {
         this.y = y;
         this.age = 0;
         this.maxAge = maxAge;
+        this.infected = false;
+        this.infectionAge = 0;
+        this.infectionDuration = DEFAULT_INFECTION_DURATION;
     }
 
     public String getName() {
@@ -49,6 +57,18 @@ public abstract class Creature {
         return maxAge;
     }
 
+    public boolean isInfected() {
+        return infected;
+    }
+
+    public int getInfectionAge() {
+        return infectionAge;
+    }
+
+    public int getInfectionDuration() {
+        return infectionDuration;
+    }
+
     public void die() {
         this.alive = false;
     }
@@ -62,6 +82,37 @@ public abstract class Creature {
         if (age >= maxAge) {
             die();
         }
+    }
+
+    public boolean infect() {
+        if (!alive || infected) {
+            return false;
+        }
+
+        infected = true;
+        infectionAge = 0;
+        return true;
+    }
+
+    public void progressDisease() {
+        if (!alive || !infected) {
+            return;
+        }
+
+        infectionAge++;
+        if (infectionAge >= infectionDuration) {
+            die();
+        }
+    }
+
+    public boolean canInfect(Creature other) {
+        return alive
+                && infected
+                && other != null
+                && other != this
+                && other.isAlive()
+                && !other.isInfected()
+                && isAdjacentTo(other);
     }
 
     public void move() {
