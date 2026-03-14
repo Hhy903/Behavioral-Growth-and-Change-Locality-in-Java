@@ -2,6 +2,7 @@ package edu.colorado.locality.routeb.simulation;
 
 import edu.colorado.locality.routeb.behavior.FeedingBehavior;
 import edu.colorado.locality.routeb.behavior.MovementBehavior;
+import edu.colorado.locality.routeb.behavior.ReproductionBehavior;
 import edu.colorado.locality.routeb.entity.Grass;
 import edu.colorado.locality.routeb.entity.Rabbit;
 import edu.colorado.locality.routeb.entity.Wolf;
@@ -68,5 +69,20 @@ class EcosystemTest {
         assertEquals(6, rabbit.getX());
         assertFalse(rabbit.isAlive());
         assertTrue(grass.isAlive());
+    }
+
+    @Test
+    void ecosystemRunsReproductionAsRegisteredBehaviorStep() {
+        Ecosystem ecosystem = new Ecosystem();
+        Rabbit first = new Rabbit("Bunny-1", 0, 0);
+        Rabbit second = new Rabbit("Bunny-2", 1, 0);
+
+        ecosystem.addCreature(first);
+        ecosystem.addCreature(second);
+        ecosystem.addBehaviorStep(new ReproductionBehavior());
+
+        ecosystem.runBehaviorSteps();
+
+        assertEquals(3, ecosystem.getCreatures().size());
     }
 }
