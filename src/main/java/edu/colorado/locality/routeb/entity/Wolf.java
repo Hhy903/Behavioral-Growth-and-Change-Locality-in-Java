@@ -7,6 +7,10 @@ public class Wolf extends Creature {
         super(name);
     }
 
+    public Wolf(String name, int x, int y) {
+        super(name, x, y);
+    }
+
     @Override
     public String getType() {
         return "Wolf";

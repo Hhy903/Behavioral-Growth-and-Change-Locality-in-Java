@@ -2,6 +2,7 @@ package edu.colorado.locality.routeb.core;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,5 +32,33 @@ class CreatureTest {
         creature.die();
 
         assertFalse(creature.isAlive());
+    }
+
+    @Test
+    void creatureStartsAtOrigin() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertEquals(0, creature.getX());
+        assertEquals(0, creature.getY());
+    }
+
+    @Test
+    void creatureCanTranslatePosition() {
+        Creature creature = new Creature("Test", 2, 3) {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        creature.translate(1, -2);
+
+        assertEquals(3, creature.getX());
+        assertEquals(1, creature.getY());
     }
 }

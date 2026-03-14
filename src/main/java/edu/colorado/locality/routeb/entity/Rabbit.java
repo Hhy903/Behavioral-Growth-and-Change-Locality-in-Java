@@ -7,6 +7,10 @@ public class Rabbit extends Creature {
         super(name);
     }
 
+    public Rabbit(String name, int x, int y) {
+        super(name, x, y);
+    }
+
     @Override
     public String getType() {
         return "Rabbit";
