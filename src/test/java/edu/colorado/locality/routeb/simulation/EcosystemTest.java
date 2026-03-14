@@ -1,6 +1,7 @@
 package edu.colorado.locality.routeb.simulation;
 
 import edu.colorado.locality.routeb.behavior.AgingBehavior;
+import edu.colorado.locality.routeb.behavior.DiseaseBehavior;
 import edu.colorado.locality.routeb.behavior.FeedingBehavior;
 import edu.colorado.locality.routeb.behavior.MovementBehavior;
 import edu.colorado.locality.routeb.behavior.ReproductionBehavior;
@@ -98,5 +99,21 @@ class EcosystemTest {
         ecosystem.runBehaviorSteps();
 
         assertEquals(1, grass.getAge());
+    }
+
+    @Test
+    void ecosystemRunsDiseaseAsRegisteredBehaviorStep() {
+        Ecosystem ecosystem = new Ecosystem();
+        Wolf wolf = new Wolf("Alpha", 0, 0);
+        Rabbit rabbit = new Rabbit("Bunny", 1, 0);
+        wolf.infect();
+
+        ecosystem.addCreature(wolf);
+        ecosystem.addCreature(rabbit);
+        ecosystem.addBehaviorStep(new DiseaseBehavior());
+
+        ecosystem.runBehaviorSteps();
+
+        assertTrue(rabbit.isInfected());
     }
 }

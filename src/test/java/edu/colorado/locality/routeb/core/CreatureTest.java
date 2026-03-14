@@ -88,4 +88,31 @@ class CreatureTest {
         assertEquals(1, creature.getAge());
         assertEquals(4, creature.getMaxAge());
     }
+
+    @Test
+    void creatureStartsUninfected() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertFalse(creature.isInfected());
+        assertEquals(0, creature.getInfectionAge());
+    }
+
+    @Test
+    void creatureCanBecomeInfected() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertTrue(creature.infect());
+        assertTrue(creature.isInfected());
+        assertEquals(0, creature.getInfectionAge());
+    }
 }

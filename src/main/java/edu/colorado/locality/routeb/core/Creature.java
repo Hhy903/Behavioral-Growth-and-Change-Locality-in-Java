@@ -7,6 +7,11 @@ public abstract class Creature {
     private int y;
     private int age;
     private int maxAge;
+    private boolean infected;
+    private int infectionAge;
+    private int infectionDuration;
+
+    private static final int DEFAULT_INFECTION_DURATION = 2;
 
     protected Creature(String name) {
         this(name, 0, 0, Integer.MAX_VALUE);
@@ -23,6 +28,9 @@ public abstract class Creature {
         this.y = y;
         this.age = 0;
         this.maxAge = maxAge;
+        this.infected = false;
+        this.infectionAge = 0;
+        this.infectionDuration = DEFAULT_INFECTION_DURATION;
     }
 
     public String getName() {
@@ -49,6 +57,18 @@ public abstract class Creature {
         return maxAge;
     }
 
+    public boolean isInfected() {
+        return infected;
+    }
+
+    public int getInfectionAge() {
+        return infectionAge;
+    }
+
+    public int getInfectionDuration() {
+        return infectionDuration;
+    }
+
     public void die() {
         this.alive = false;
     }
@@ -60,6 +80,20 @@ public abstract class Creature {
 
     public void incrementAge() {
         this.age++;
+    }
+
+    public boolean infect() {
+        if (!alive || infected) {
+            return false;
+        }
+
+        this.infected = true;
+        this.infectionAge = 0;
+        return true;
+    }
+
+    public void incrementInfectionAge() {
+        this.infectionAge++;
     }
 
     public abstract String getType();
