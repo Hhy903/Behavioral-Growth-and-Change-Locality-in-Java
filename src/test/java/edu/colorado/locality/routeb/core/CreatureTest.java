@@ -48,6 +48,18 @@ class CreatureTest {
     }
 
     @Test
+    void creatureStartsAtAgeZero() {
+        Creature creature = new Creature("Test") {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        assertEquals(0, creature.getAge());
+    }
+
+    @Test
     void creatureCanTranslatePosition() {
         Creature creature = new Creature("Test", 2, 3) {
             @Override
@@ -60,5 +72,20 @@ class CreatureTest {
 
         assertEquals(3, creature.getX());
         assertEquals(1, creature.getY());
+    }
+
+    @Test
+    void creatureCanIncrementAge() {
+        Creature creature = new Creature("Test", 0, 0, 4) {
+            @Override
+            public String getType() {
+                return "TestType";
+            }
+        };
+
+        creature.incrementAge();
+
+        assertEquals(1, creature.getAge());
+        assertEquals(4, creature.getMaxAge());
     }
 }

@@ -1,5 +1,6 @@
 package edu.colorado.locality.routeb.simulation;
 
+import edu.colorado.locality.routeb.behavior.AgingBehavior;
 import edu.colorado.locality.routeb.behavior.FeedingBehavior;
 import edu.colorado.locality.routeb.behavior.MovementBehavior;
 import edu.colorado.locality.routeb.behavior.ReproductionBehavior;
@@ -84,5 +85,18 @@ class EcosystemTest {
         ecosystem.runBehaviorSteps();
 
         assertEquals(3, ecosystem.getCreatures().size());
+    }
+
+    @Test
+    void ecosystemRunsAgingAsRegisteredBehaviorStep() {
+        Ecosystem ecosystem = new Ecosystem();
+        Grass grass = new Grass("Patch-1");
+
+        ecosystem.addCreature(grass);
+        ecosystem.addBehaviorStep(new AgingBehavior());
+
+        ecosystem.runBehaviorSteps();
+
+        assertEquals(1, grass.getAge());
     }
 }

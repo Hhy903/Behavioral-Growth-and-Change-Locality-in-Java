@@ -1,5 +1,6 @@
 package edu.colorado.locality.routeb.simulation;
 
+import edu.colorado.locality.routeb.behavior.AgingBehavior;
 import edu.colorado.locality.routeb.behavior.FeedingBehavior;
 import edu.colorado.locality.routeb.behavior.MovementBehavior;
 import edu.colorado.locality.routeb.behavior.ReproductionBehavior;
@@ -18,6 +19,7 @@ public class Simulation {
         ecosystem.addBehaviorStep(new MovementBehavior());
         ecosystem.addBehaviorStep(new FeedingBehavior());
         ecosystem.addBehaviorStep(new ReproductionBehavior());
+        ecosystem.addBehaviorStep(new AgingBehavior());
         ecosystem.runBehaviorSteps();
         ecosystem.printState();
     }
