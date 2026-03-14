@@ -5,6 +5,7 @@ import edu.colorado.locality.routeb.behavior.DiseaseBehavior;
 import edu.colorado.locality.routeb.behavior.FeedingBehavior;
 import edu.colorado.locality.routeb.behavior.MovementBehavior;
 import edu.colorado.locality.routeb.behavior.ReproductionBehavior;
+import edu.colorado.locality.routeb.behavior.SeasonalResourceBehavior;
 import edu.colorado.locality.routeb.entity.Grass;
 import edu.colorado.locality.routeb.entity.Rabbit;
 import edu.colorado.locality.routeb.entity.Wolf;
@@ -115,5 +116,17 @@ class EcosystemTest {
         ecosystem.runBehaviorSteps();
 
         assertTrue(rabbit.isInfected());
+    }
+
+    @Test
+    void ecosystemRunsSeasonalBehaviorAsRegisteredStep() {
+        Ecosystem ecosystem = new Ecosystem();
+
+        ecosystem.addBehaviorStep(new SeasonalResourceBehavior());
+
+        ecosystem.runBehaviorSteps();
+
+        assertEquals(2, ecosystem.getCreatures().size());
+        assertEquals(Season.SUMMER, ecosystem.getCurrentSeason());
     }
 }

@@ -5,6 +5,7 @@ import edu.colorado.locality.routeb.behavior.DiseaseBehavior;
 import edu.colorado.locality.routeb.behavior.FeedingBehavior;
 import edu.colorado.locality.routeb.behavior.MovementBehavior;
 import edu.colorado.locality.routeb.behavior.ReproductionBehavior;
+import edu.colorado.locality.routeb.behavior.SeasonalResourceBehavior;
 import edu.colorado.locality.routeb.entity.Grass;
 import edu.colorado.locality.routeb.entity.Rabbit;
 import edu.colorado.locality.routeb.entity.Wolf;
@@ -22,6 +23,7 @@ public class Simulation {
         ecosystem.addBehaviorStep(new ReproductionBehavior());
         ecosystem.addBehaviorStep(new DiseaseBehavior());
         ecosystem.addBehaviorStep(new AgingBehavior());
+        ecosystem.addBehaviorStep(new SeasonalResourceBehavior());
         ecosystem.runBehaviorSteps();
         ecosystem.printState();
     }
